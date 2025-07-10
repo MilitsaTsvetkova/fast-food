@@ -1,5 +1,6 @@
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
+import { signIn } from "@/lib/appwrite";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
@@ -12,8 +13,10 @@ const SignIn = () => {
     password: "",
   });
 
-  const submit = () => {
-    if (!form.email || !form.password) {
+  const { email, password } = form;
+
+  const submit = async () => {
+    if (!email || !password) {
       return Alert.alert("Error", "Please fill in all fields.", [
         { text: "OK" },
       ]);
@@ -21,7 +24,10 @@ const SignIn = () => {
     setIsSigningIn(true);
 
     try {
-      Alert.alert("Success", "You have successfully signed in.");
+      await signIn({
+        email,
+        password,
+      });
       router.replace("/");
     } catch (error: unknown) {
       Alert.alert(
@@ -36,14 +42,14 @@ const SignIn = () => {
     <View className="gap-10 bg-white rounded-lg p-5 mt-5">
       <CustomInput
         placeholder="Enter your email"
-        value={form.email}
+        value={email}
         onChangeText={(text) => setForm((prev) => ({ ...prev, email: text }))}
         label="Email"
         keyboardType="email-address"
       />
       <CustomInput
         placeholder="Enter your password"
-        value={form.password}
+        value={password}
         onChangeText={(text) =>
           setForm((prev) => ({ ...prev, password: text }))
         }

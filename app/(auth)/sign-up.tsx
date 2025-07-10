@@ -1,5 +1,6 @@
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
+import { createUser } from "@/lib/appwrite";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
@@ -13,8 +14,10 @@ const SignUp = () => {
     password: "",
   });
 
-  const submit = () => {
-    if (!form.name || !form.email || !form.password) {
+  const { email, name, password } = form;
+
+  const submit = async () => {
+    if (!name || !email || !password) {
       return Alert.alert("Error", "Please fill in all fields.", [
         { text: "OK" },
       ]);
@@ -22,7 +25,11 @@ const SignUp = () => {
     setIsSigningUp(true);
 
     try {
-      Alert.alert("Success", "You have successfully signed up.");
+      await createUser({
+        email,
+        name,
+        password,
+      });
       router.replace("/");
     } catch (error: unknown) {
       Alert.alert(
@@ -37,20 +44,20 @@ const SignUp = () => {
     <View className="gap-10 bg-white rounded-lg p-5 mt-5">
       <CustomInput
         placeholder="Enter your full name"
-        value={form.name}
+        value={name}
         onChangeText={(text) => setForm((prev) => ({ ...prev, name: text }))}
         label="Full Name"
       />
       <CustomInput
         placeholder="Enter your email"
-        value={form.email}
+        value={email}
         onChangeText={(text) => setForm((prev) => ({ ...prev, email: text }))}
         label="Email"
         keyboardType="email-address"
       />
       <CustomInput
         placeholder="Enter your password"
-        value={form.password}
+        value={password}
         onChangeText={(text) =>
           setForm((prev) => ({ ...prev, password: text }))
         }

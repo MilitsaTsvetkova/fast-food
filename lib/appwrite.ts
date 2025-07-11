@@ -1,4 +1,11 @@
-import { Account, Avatars, Client, Databases, ID } from "react-native-appwrite";
+import {
+  Account,
+  Avatars,
+  Client,
+  Databases,
+  ID,
+  Query,
+} from "react-native-appwrite";
 
 export const appwriteConfig = {
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
@@ -58,5 +65,28 @@ export const signIn = async ({ email, password }: SignInParams) => {
     throw new Error(
       error instanceof Error ? error.message : "An unknown error occurred"
     );
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const currentAccount = await account.get();
+    if (!currentAccount) {
+      throw new Error("No user is currently logged in");
+    }
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.database!,
+      appwriteConfig.userCollectionId!,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
+
+    if (currentUser.documents.length === 0) {
+      throw new Error("User not found in database");
+    }
+    return currentUser.documents[0];
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    throw error;
   }
 };

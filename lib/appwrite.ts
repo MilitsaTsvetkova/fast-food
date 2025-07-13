@@ -6,22 +6,23 @@ import {
   Databases,
   ID,
   Query,
+  Storage,
 } from "react-native-appwrite";
 
 export const appwriteConfig = {
-  endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
+  endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
   platform: "comm.scooby.fooddelivery",
-  projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
-  database: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
-  userCollectionId: process.env.EXPO_PUBLIC_APPWRITE_USER_COLLECTION_ID,
+  projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
+  database: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
+  userCollectionId: process.env.EXPO_PUBLIC_APPWRITE_USER_COLLECTION_ID!,
   customizationsCollectionId:
-    process.env.EXPO_PUBLIC_APPWRITE_CUSTOMIZATIONS_COLLECTION_ID,
-  menuCollectionId: process.env.EXPO_PUBLIC_APPWRITE_MENU_COLLECTION_ID,
+    process.env.EXPO_PUBLIC_APPWRITE_CUSTOMIZATIONS_COLLECTION_ID!,
+  menuCollectionId: process.env.EXPO_PUBLIC_APPWRITE_MENU_COLLECTION_ID!,
   categoriesCollectionId:
-    process.env.EXPO_PUBLIC_APPWRITE_CATEGORIES_COLLECTION_ID,
+    process.env.EXPO_PUBLIC_APPWRITE_CATEGORIES_COLLECTION_ID!,
   menuCustomizationsCollectionId:
-    process.env.EXPO_PUBLIC_APPWRITE_MENU_CUSTOMIZATIONS_COLLECTION_ID,
-  assetsBucket: process.env.EXPO_PUBLIC_APPWRITE_ASSETS_BUCKET_ID,
+    process.env.EXPO_PUBLIC_APPWRITE_MENU_CUSTOMIZATIONS_COLLECTION_ID!,
+  assetsBucket: process.env.EXPO_PUBLIC_APPWRITE_ASSETS_BUCKET_ID!,
 };
 
 const client = new Client()
@@ -32,6 +33,7 @@ const client = new Client()
 export const account = new Account(client);
 export const databases = new Databases(client);
 export const avatars = new Avatars(client);
+export const storage = new Storage(client);
 
 export const createUser = async ({
   email,

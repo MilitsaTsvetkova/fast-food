@@ -1,3 +1,5 @@
+import { Models } from "react-native-appwrite";
+
 interface CustomInputProps {
   placeholder?: string;
   value?: string;
@@ -25,4 +27,10 @@ interface CreateUserParams {
 interface SignInParams {
   email: string;
   password: string;
+}
+
+export interface User extends Models.Document {
+  name: string;
+  email: string;
+  avatar: string;
 }

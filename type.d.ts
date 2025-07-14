@@ -45,3 +45,14 @@ interface GetMenuParams {
   category: string;
   query: string;
 }
+
+export interface MenuItem extends Models.Document {
+  name: string;
+  price: number;
+  image_url: string;
+  description: string;
+  calories: number;
+  protein: number;
+  rating: number;
+  type: string;
+}

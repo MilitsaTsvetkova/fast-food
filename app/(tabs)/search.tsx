@@ -2,13 +2,14 @@ import CartButton from "@/components/CartButton";
 import Filter from "@/components/Filter";
 import MenuCard from "@/components/MenuCard";
 import SearchBar from "@/components/SearchBar";
+import { images } from "@/constants";
 import { getCategories, getMenu } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { Category, MenuItem } from "@/type";
 import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
-import { FlatList, SafeAreaView, Text, View } from "react-native";
+import { FlatList, Image, SafeAreaView, Text, View } from "react-native";
 
 const Search = () => {
   const { category, query } = useLocalSearchParams<{
@@ -77,6 +78,11 @@ const Search = () => {
         ListEmptyComponent={() =>
           !loading && (
             <View className="flex-1 items-center justify-center">
+              <Image
+                source={images.emptyState}
+                resizeMode="contain"
+                className="size-6"
+              />
               <Text className="text-dark-100 text-lg">No results found</Text>
             </View>
           )
